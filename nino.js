@@ -170,7 +170,7 @@ module.exports = nino = async (nino, mek) => {
 
         
         const listmsg = (from, title, desc, list) => { // ngeread nya pake rowsId, jadi command nya ga keliatan
-            let po = nino.prepareMessageFromContent(from, {"listMessage": {"title": title,"description": desc,"buttonText": "Pilih Disini","footerText": "Jangan Lupa Donasi Ya Kak ☕","listType": "SINGLE_SELECT","sections": list}}, {})
+            let po = nino.prepareMessageFromContent(from, {"listMessage": {"title": title,"description": desc,"buttonText": "Pilih Disini","footerText": "Sewabot Pc Owner!!","listType": "SINGLE_SELECT","sections": list}}, {})
             return nino.relayWAMessage(po, {waitForAck: true})
         }
         
@@ -369,36 +369,64 @@ module.exports = nino = async (nino, mek) => {
                break      
         case 'menu':
         case 'help':
-               menu =`Hello, ${pushname} 
-*Here My Command List*
+               menu =`• Hai ${pushname} 👋
+
+*Tanggal :*${tampilTanggal}
+*Waktu :* ${ucapanWaktu} || ${time}
+
+Berikut menu yang terdapat di Nakano 🤖
 
 *STICKER*
-~> \`\`\`attp, exif, sticker, toimg, tovideo, telesticker\`\`\`
+• ${prefix}exif
+• ${prefix}sticker
+• ${prefix}toimg
+• ${prefix}tovideo
+• ${prefix}attp
 
 *DOWNLOAD*
-~> \`\`\`youtubedl, play, igdl, igstory, tiktokdl, mediafire, facebook, nhdl\`\`\`
-
-*STICKER CMD*
-~> \`\`\`setcmd, delcmd, listcmd\`\`\`
+• ${prefix}ytmp4
+• ${prefix}ytmp3
+• ${prefix}play
+• ${prefix}igdl
+• ${prefix}mediafire
 
 *SEARCH*
-~> \`\`\`chara, image, google, ytsearch, pinterest, ytdesc\`\`\`
+• ${prefix}pinterest
 
 *SESSION*
-~> \`\`\`jadibot, stopjadibot, listjadibot\`\`\`
+• ${prefix}jadibot
+• ${prefix}stopjadibot
+• ${prefix}listjadibot
 
 *IMAGE*
-~> \`\`\`waifu, loli, husbu, milf, cosplay, wallml, hentai\`\`\`
+• ${prefix}waifu
+• ${prefix}loli
+• ${prefix}husbu
+• ${prefix}milf
+• ${prefix}cosplay
+• ${prefix}wallml
+• ${prefix}hentai
 
-*INFO*
-~> \`\`\`owner, runtime\`\`\`
+*TOOLS*
+• ${prefix}imgtourl
 
-*GROUP*
-~> \`\`\`leaveall, hidetag, welcome, culik\`\`\``
+*ADMIN GROUP*
+• ${prefix}welcome
+• ${prefix}group open
+• ${prefix}group close
+• ${prefix}antilink
+• ${prefix}hidetag
+
+*PREMIUM*
+• ${prefix}setcmd
+• ${prefix}listcmd
+• ${prefix}delcmd
+
+© By Murphy`
 
                buttons = [{buttonId:`${prefix}ping`,buttonText:{displayText:'PING'},type:1},{buttonId:`${prefix}owner`,buttonText:{displayText:'OWNER'},type:1}]
 
-               buttonsMessage = { contentText: `${menu}`, footerText: 'Simple SelfBot • Made By Nino ☕',  buttons: buttons, headerType: 1 }
+               buttonsMessage = { contentText: `${menu}`, footerText: 'Sewabot Pc Owner!!!',  buttons: buttons, headerType: 1 }
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})
                nino.relayWAMessage(prep)
                break

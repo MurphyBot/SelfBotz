@@ -64,7 +64,58 @@ owner = setting.owner
 let welkom = JSON.parse(fs.readFileSync('./database/welcome.json'))
 let _scommand = JSON.parse(fs.readFileSync('./database/scommand.json'))
 
-
+const time2 = moment().tz('Asia/Jakarta').format('HH:mm:ss')
+if(time2 < "23:59:00"){
+var ucapanWaktu = 'Selamat Malam'
+                                        }
+if(time2 < "19:00:00"){
+var ucapanWaktu = 'Selamat Petang'
+                                         }
+if(time2 < "18:00:00"){
+var ucapanWaktu = 'Selamat Sore'
+                                         }
+if(time2 < "15:00:00"){
+var ucapanWaktu = 'Selamat Siang'
+                                         }
+if(time2 < "11:00:00"){
+var ucapanWaktu = 'Selamat Pagi'
+                                         }
+if(time2 < "05:00:00"){
+var ucapanWaktu = 'Selamat Malam'   
+var date = new Date();
+        var tahun = date.getFullYear();
+        var bulan1 = date.getMonth();
+        var tanggal = date.getDate();
+        var hari = date.getDay();
+        var jam = date.getHours();
+        var menit = date.getMinutes();
+        var detik = date.getSeconds();
+        var waktoo = date.getHours();
+            switch(hari) {
+                case 0: hari = "Minggu"; break;
+                case 1: hari = "Senin"; break;
+                case 2: hari = "Selasa"; break;
+                case 3: hari = "Rabu"; break;
+                case 4: hari = "Kamis"; break;
+                case 5: hari = "Jum`at"; break;
+                case 6: hari = "Sabtu"; break;
+            }
+            switch(bulan1) {
+                case 0: bulan1 = "Januari"; break;
+                case 1: bulan1 = "Februari"; break;
+                case 2: bulan1 = "Maret"; break;
+                case 3: bulan1 = "April"; break;
+                case 4: bulan1 = "Mei"; break;
+                case 5: bulan1 = "Juni"; break;
+                case 6: bulan1 = "Juli"; break;
+                case 7: bulan1 = "Agustus"; break;
+                case 8: bulan1 = "September"; break;
+                case 9: bulan1 = "Oktober"; break;
+                case 10: bulan1 = "November"; break;
+                case 11: bulan1 = "Desember"; break;
+            }
+            var tampilTanggal = "" + hari + ", " + tanggal + " " + bulan1 + " " + tahun;
+            var tampilWaktu = "" + "Jam : " + jam + ":" + menit + ":" + detik + " Wib";
 // Sticker Cmd
 const addCmd = (id, command) => {
     const obj = { id: id, chats: command }

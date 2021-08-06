@@ -367,6 +367,106 @@ module.exports = nino = async (nino, mek) => {
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})
                nino.relayWAMessage(prep)
                break      
+        case 'nhentai':
+              if (!isPremium && fromMe) return reply('Khusus Premium')
+              if (args.length == 0) return reply(`Example: ${prefix + command} 344253`)
+              reply(mess.wait)
+              henid = args[0]
+              get_result = await fetchJson(`https://api.lolhuman.xyz/api/nhentai/${henid}?apikey=AurelCans`)
+              get_result = get_result.result
+              ini_txt = `Title Romaji : ${get_result.title_romaji}\n`
+              ini_txt += `Title Native : ${get_result.title_native}\n`
+              ini_txt += `Read Online : ${get_result.read}\n`
+              get_info = get_result.info
+              ini_txt += `Parodies : ${get_info.parodies}\n`
+              ini_txt += `Character : ${get_info.characters.join(", ")}\n`
+              ini_txt += `Tags : ${get_info.tags.join(", ")}\n`
+              ini_txt += `Artist : ${get_info.artists}\n`
+              ini_txt += `Group : ${get_info.groups}\n`
+              ini_txt += `Languager : ${get_info.languages.join(", ")}\n`
+              ini_txt += `Categories : ${get_info.categories}\n`
+              ini_txt += `Pages : ${get_info.pages}\n`
+              ini_txt += `Uploaded : ${get_info.uploaded}\n`
+              reply(ini_txt)
+              break
+        case 'sewabot':
+              gopeynya = 'https://telegra.ph/file/97bb0051b5c12e492bdd1.jpg'
+              teksnya = `*── 「 PRICE LIST 」 ──*
+
+*Tarif Premium User adalah 10K Perbulan*
+*Keuntungan Premium Diantaranya:*
+♲ *Bebas memakai fitur premium*
+♲ *Dapat Informasi Lebih dulu akan Update, Nomor Bot Baru (Jika Terbanned), dan Lainnya*
+
+*Jika Tertarik,Kalian Bisa Bayar Melalui Metode Pembayaran di Bawah:*
+*Dana : 083872131057*
+
+*Info Lebih Lengkap Chat Owner, Ketik ${prefix}owner*
+*_note_*:
+*Pembelian Premium yang disertai SewaBot hanya akan membayar 20K (Diskon 5K)*`
+              nino.sendMessage(from, await getBuffer(gopeynya), image, {quoted: mek, caption: teksnya })
+              break
+         case 'infoku':
+         info =`Information Softbot
+*• Name :* Softbot
+*• Number :* 
+https://wa.me/994409002319
+*• Owner :* Rafa29
+*• Status :* Public
+*• Prefix :* ${prefix}
+
+*Special Tahnks To :*
+*• Aqulzz*
+*• Chitanda Eru*
+*• Marz*
+*• Adiwajshing*
+*• Penyedia Rest API's*`
+
+               
+               buttons = [{buttonId: '!rulesbot',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
+
+               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
+
+               buttonsMessage = {
+               contentText: `${info}`,
+               footerText: 'Created By @Rafa29__', imageMessage: imageMsg,
+               buttons: buttons,
+               headerType: 4
+}
+
+               prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
+               nino.relayWAMessage(prep)
+               break
+        case 'rulesbot':
+         syarat = `-----[ Syarat & Ketentuan ]-----
+
+1. Jangan spam bot. 
+Sanksi: *WARN/SOFT BLOCK*
+
+2. Jangan telepon bot.
+Sanksi: *SOFT BLOCK*
+
+3. Jangan mengejek bot.
+Sanksi: *PERMANENT BLOCK*
+
+4. Jangan Culik bot ke gc tanpa sewa.
+Sanksi: *PERMANENT BAN BLOCK SEND BUG*
+
+Jika sudah dipahami Syarat & Ketentuan-nya, silakan Klik *COMMAND* Di Bawah Ini`
+buttons = [{buttonId: '${prefix}help',buttonText:{displayText: 'COMMAND'},type:1}]
+
+               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok.jpg`), 'imageMessage')).message.imageMessage
+
+               buttonsMessage = {
+               contentText: `${syarat}`,
+               footerText: 'Created By @Rafa29__', imageMessage: imageMsg,
+               buttons: buttons,
+               headerType: 4
+}
+
+               prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
+               nino.relayWAMessage(prep)
+               break
         case 'menu':
         case 'help':
                consttime = moment().tz('Asia/Jakarta').format('HH:mm:ss')
@@ -375,6 +475,7 @@ module.exports = nino = async (nino, mek) => {
 
 *Tanggal :* ${consttanggal} 
 *Jam :* ${consttime} WIB
+
 Berikut menu yang terdapat di Nakano 🤖
 
 *STICKER*
@@ -426,7 +527,7 @@ Berikut menu yang terdapat di Nakano 🤖
 
 © By Murphy`
 
-               buttons = [{buttonId:`${prefix}ping`,buttonText:{displayText:'PING'},type:1},{buttonId:`${prefix}owner`,buttonText:{displayText:'OWNER'},type:1}]
+               buttons = [{buttonId:`${prefix}owner`,buttonText:{displayText:'Owner'},type:1},{buttonId:`${prefix}infoku`,buttonText:{displayText:'Info Bot'},type:1}]
 
                buttonsMessage = { contentText: `${menu}`, footerText: 'Sewabot Pc Owner!!!',  buttons: buttons, headerType: 1 }
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})

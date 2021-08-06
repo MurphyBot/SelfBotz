@@ -369,8 +369,12 @@ module.exports = nino = async (nino, mek) => {
                break      
         case 'menu':
         case 'help':
-               menu =`• Hai ${pushname} 👋
+               consttime = moment().tz('Asia/Jakarta').format('HH:mm:ss')
+               consttanggal = moment.tz("Asia/Jakarta").format("LLLL")
+               menu =`• Hai @${sender.split("@")[0]} 👋
 
+*Tanggal :* ${consttanggal} 
+*Jam :* ${consttime} WIB
 Berikut menu yang terdapat di Nakano 🤖
 
 *STICKER*
@@ -405,7 +409,8 @@ Berikut menu yang terdapat di Nakano 🤖
 • ${prefix}hentai
 
 *TOOLS*
-• ${prefix}imgtourl
+• ${prefix}imgb
+• ${prefix}telegraph
 
 *ADMIN GROUP*
 • ${prefix}welcome
@@ -430,6 +435,7 @@ Berikut menu yang terdapat di Nakano 🤖
 //------------------< Sticker Cmd >-------------------
        case 'addcmd': 
        case 'setcmd':
+              if (isOwner && fromMe) return reply('Kamu Bukan User Premium')
               if (isQuotedSticker) {
               if (!q) return reply(`Penggunaan : ${command} cmdnya dan tag stickernya`)
               var kodenya = mek.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage.fileSha256.toString('base64')
@@ -440,6 +446,7 @@ Berikut menu yang terdapat di Nakano 🤖
 }
               break
        case 'delcmd':
+              if (isOwner && fromMe) return reply('Kamu Bukan User Premium')
               if (!isQuotedSticker) return reply(`Penggunaan : ${command} tagsticker`)
               var kodenya = mek.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage.fileSha256.toString('base64')
             _scommand.splice(getCommandPosition(kodenya), 1)
@@ -447,6 +454,7 @@ Berikut menu yang terdapat di Nakano 🤖
               textImg("Done!")
               break
        case 'listcmd':
+              if (isOwner && fromMe) return reply('Kamu Bukan User Premium')
               let teksnyee = `\`\`\`「 LIST STICKER CMD 」\`\`\``
               let cemde = [];
               for (let i of _scommand) {
@@ -758,7 +766,23 @@ a += `
                reply(`${e}`)
 }
                break
-       case 'tourl':
+       case 'imgb':
+       case 'img2url':
+               reply(mess.wait) 
+               var imgbb = require('imgbb-uploader')
+               var encmedia  = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
+               var media = await  nino.downloadAndSaveMediaMessage(encmedia)       
+               imgbb('39d895963468b814fad0514bd28787e2', media)
+              .then(data => {
+               var caps = `*_IMAGE TO URL_*\n\n*~>  ID :* ${data.id}\n*~>  MimeType :* ${data.image.mime}\n*~>  Extension :* ${data.image.extension}\n*~>  URL :* ${data.display_url}`
+               ibb = fs.readFileSync(media)
+               nino.sendMessage(from, ibb, image, { quoted: mek, caption: caps})
+})
+              .catch(err => {
+               throw err
+})
+               break
+       case 'telegraph':
                if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedVideo ) && args.length == 0) {
                reply(mess.wait)
                boij = isQuotedImage || isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek

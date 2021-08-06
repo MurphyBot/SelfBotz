@@ -558,7 +558,7 @@ Berikut menu yang terdapat di Nakano 🤖
 
                buttons = [{buttonId:`${prefix}owner`,buttonText:{displayText:'Owner'},type:1},{buttonId:`${prefix}info`,buttonText:{displayText:'Info Bot'},type:1}]
 
-               buttonsMessage = { contentText: `${menu}`, footerText: 'Sc Ini Di Susun Oleh Nino x Murphy🤪',  buttons: buttons, headerType: 1 }
+               buttonsMessage = { contentText: `${menu}`, footerText: 'Sewa🤖 Pc Owner!! 24 Jam Online',  buttons: buttons, headerType: 1 }
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})
                nino.relayWAMessage(prep)
                break
@@ -1152,21 +1152,21 @@ a += `
                nino.sendMessage(from, teks, text, {quoted: mek})
                break
        case 'welcome':
-              if (!isGroup) return reply(mess.only.group)
-              if (args.length < 1) return reply(`${prefix}welcome enable/disable`)
-              if ((args[0]) === 'enable') {
-              if (isWelkom) return reply('Udah aktif')
-              welkom.push(from)
-              fs.writeFileSync('./database/welcome.json', JSON.stringify(welkom))
-              reply('Sukses mengaktifkan fitur welcome di group ini ✔️')
-              } else if ((args[0]) === 'disable') {
-              welkom.splice(from, 1)
-              fs.writeFileSync('./database/welcome.json', JSON.stringify(welkom))
-              reply('Sukses menonaktifkan fitur welcome di group ini ✔️')
-              } else {
-              reply('Enable untuk mengaktifkan, disable untuk menonaktifkan')
+               if (!isGroup) return reply(mess.only.group)
+               if (args.length < 1) return reply('!welcome enable/disable')
+               if ((args[0]) === 'enable') {
+               if (isWelkom) return reply('Udah aktif')
+               welkom.push(from)
+               fs.writeFileSync('./database/group/welcome.json', JSON.stringify(welkom))
+               reply('Sukses mengaktifkan fitur welcome di group ini ✔️')
+               } else if ((args[0]) === 'disable') {
+               welkom.splice(from, 1)
+               fs.writeFileSync('./database/group/welcome.json', JSON.stringify(welkom))
+               reply('Sukses menonaktifkan fitur welcome di group ini ✔️')
+               } else {
+               reply('Enable untuk mengaktifkan, disable untuk menonaktifkan')
 }
-              break
+               break
        case 'infoig':
               teks = `Jangan Lupa Follow Ig Owner Ya : https://www.instagram.com/ffzkyaf`
               nino.sendMessage(from, teks, text, { quoted : mek })

@@ -419,9 +419,8 @@ https://wa.me/994409002319
 *• Nino*
 *• Murphy<Ya Gua>*
 *• Lolhuman*`
-
                
-               buttons = [{buttonId: '#rulesnihajg',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
+               buttons = [{buttonId: '${prefix}rulesnihajg',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
 
@@ -452,9 +451,9 @@ Sanksi: *PERMANENT BAN BLOCK SEND BUG*
 
 Jika sudah dipahami Syarat & Ketentuan-nya, silakan Klik *COMMAND* Di Bawah Ini`
                
-               buttons = [{buttonId: '#menu',buttonText:{displayText: 'COMMAND'},type:1}]
+               buttons = [{buttonId: '${prefix}menu',buttonText:{displayText: 'COMMAND'},type:1}]
 
-               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
+               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/Nakano.jpg`), 'imageMessage')).message.imageMessage
 
                buttonsMessage = {
                contentText: `${info}`,

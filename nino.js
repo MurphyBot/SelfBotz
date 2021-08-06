@@ -417,11 +417,11 @@ https://wa.me/994409002319
 
 *Special Tahnks To :*
 *• Nino*
-*• Murphy<Y Gua>)*
+*• Murphy<Ya Gua>*
 *• Lolhuman*`
 
                
-               buttons = [{buttonId: '${prefix}rulesbot',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
+               buttons = [{buttonId: '#rulesnihajg',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
 
@@ -435,8 +435,8 @@ https://wa.me/994409002319
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
                nino.relayWAMessage(prep)
                break
-        case 'rulesbot':
-         syarat = `-----[ Syarat & Ketentuan ]-----
+        case 'rulesnihajg':
+         info =`-----[ Syarat & Ketentuan ]-----
 
 1. Jangan spam bot. 
 Sanksi: *WARN/SOFT BLOCK*
@@ -451,12 +451,13 @@ Sanksi: *PERMANENT BLOCK*
 Sanksi: *PERMANENT BAN BLOCK SEND BUG*
 
 Jika sudah dipahami Syarat & Ketentuan-nya, silakan Klik *COMMAND* Di Bawah Ini`
-buttons = [{buttonId: '${prefix}help',buttonText:{displayText: 'COMMAND'},type:1}]
+               
+               buttons = [{buttonId: '#menu',buttonText:{displayText: 'COMMAND'},type:1}]
 
-               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok.jpg`), 'imageMessage')).message.imageMessage
+               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
 
                buttonsMessage = {
-               contentText: `${syarat}`,
+               contentText: `${info}`,
                footerText: 'Created By @Rafa29__', imageMessage: imageMsg,
                buttons: buttons,
                headerType: 4
@@ -469,7 +470,7 @@ buttons = [{buttonId: '${prefix}help',buttonText:{displayText: 'COMMAND'},type:1
         case 'help':
                consttime = moment().tz('Asia/Jakarta').format('HH:mm:ss')
                consttanggal = moment.tz("Asia/Jakarta").format("LLLL")
-               menu =`• Hai @${sender.split("@")[0]} 👋
+               menu =`• Hai ${pushname} 👋
 
 *Tanggal :* ${consttanggal} 
 *Jam :* ${consttime} WIB

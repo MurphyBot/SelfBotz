@@ -416,14 +416,12 @@ https://wa.me/994409002319
 *• Prefix :* ${prefix}
 
 *Special Tahnks To :*
-*• Aqulzz*
-*• Chitanda Eru*
-*• Marz*
-*• Adiwajshing*
-*• Penyedia Rest API's*`
+*• Nino*
+*• Murphy<Y Gua>)*
+*• Lolhuman*`
 
                
-               buttons = [{buttonId: '!rulesbot',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
+               buttons = [{buttonId: '${prefix}rulesbot',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
 
@@ -1145,7 +1143,7 @@ a += `
        case 'sourcecode': 
        case 'sc': 
        case 'src':
-              textImg(`Bot ini menggunakan sc : https://github.com/Nino-chan02/NinoWangy`)
+              textImg(`Bot ini menggunakan sc : https://github.com/Xinz-Team/Xinz-Bot`)
               break
        case 'jadibot':
               if (!isOwner) return

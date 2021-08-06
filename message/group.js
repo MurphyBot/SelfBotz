@@ -36,7 +36,7 @@ module.exports = welcome = async (nino, anu) => {
                 let v = nino.contacts[num] || { notify: num.replace(/@.+/, '') }
                 anu_user = v.vname || v.notify || num.split('@')[0]
                 teks = `Halo ${anu_user} \n\nNama : \nUmur :\nGender : \nAsal :\n\nSemoga Betah dan jangan lupa isi`
-	            buff = await getBuffer(`http://hadi-api.herokuapp.com/api/card/welcome?nama=${num.split('@')[0]}&descriminator=${memeg}&memcount=${memeg}&gcname=${encodeURI(mdata.subject)}&pp=${pp_user}&bg=https://telegra.ph/file/841db869a5bb2cced77c9.jpg`)
+	            buff = await getBuffer(`https://api.lolhuman.xyz/api/base/welcome?apikey=${setting.lolkey}&img1=${pp_user}&img2=${pp_grup}&background=https://telegra.ph/file/9c41931cada0cfe68b8b7.jpg&username=${encodeURI(anu_user)}&member=${memeg}&groupname= ${encodeURI(mdata.subject)}`)
 		        nino.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
 		}
             if (anu.action == 'remove' && !mem.includes(nino.user.jid)) {
@@ -47,7 +47,7 @@ module.exports = welcome = async (nino, anu) => {
                 anu_user = w.vname || w.notify || num.split('@')[0]
                 memeg = mdata.participants.length
                 out = `Kenapa tuh? kok bisa keluar? \nSayonara ${anu_user} we will miss you`
-                buff = await getBuffer(`http://hadi-api.herokuapp.com/api/card/goodbye?nama=${num.split('@')[0]}&descriminator=${memeg}&memcount=${memeg}&gcname=${encodeURI(mdata.subject)}&pp=${pp_user}&bg=https://telegra.ph/file/0de9e05e9ebaf276b848e.jpg`)
+                buff = await getBuffer(`https://api.lolhuman.xyz/api/base/leave?apikey=${setting.lolkey}&img1=${pp_user}&img2=${pp_grup}&background=https://telegra.ph/file/9c41931cada0cfe68b8b7.jpg&username=${encodeURI(anu_user)}&member=${memeg}&groupname= ${encodeURI(mdata.subject)}`)
                 nino.sendMessage(mdata.id, buff, MessageType.image, {caption: out, contextInfo: {"mentionedJid": [num]}})
             }
 		} catch (e) {

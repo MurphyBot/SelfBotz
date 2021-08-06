@@ -406,7 +406,7 @@ module.exports = nino = async (nino, mek) => {
 *Pembelian Premium yang disertai SewaBot hanya akan membayar 20K (Diskon 5K)*`
               nino.sendMessage(from, await getBuffer(gopeynya), image, {quoted: mek, caption: teksnya })
               break
-         case 'infoku':
+         case 'info':
          info =`Information Softbot
 *• Name :* Softbot
 *• Number :* 
@@ -420,7 +420,7 @@ https://wa.me/994409002319
 *• Murphy<Ya Gua>*
 *• Lolhuman*`
                
-               buttons = [{buttonId: '${prefix}rulesnihajg',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
+               buttons = [{buttonId: '#rulesnihajg',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
 
@@ -451,7 +451,7 @@ Sanksi: *PERMANENT BAN BLOCK SEND BUG*
 
 Jika sudah dipahami Syarat & Ketentuan-nya, silakan Klik *COMMAND* Di Bawah Ini`
                
-               buttons = [{buttonId: '${prefix}menu',buttonText:{displayText: 'COMMAND'},type:1}]
+               buttons = [{buttonId: '#menu',buttonText:{displayText: 'COMMAND'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/Nakano.jpg`), 'imageMessage')).message.imageMessage
 
@@ -525,7 +525,7 @@ Berikut menu yang terdapat di Nakano 🤖
 
 © By Murphy`
 
-               buttons = [{buttonId:`${prefix}owner`,buttonText:{displayText:'Owner'},type:1},{buttonId:`${prefix}infoku`,buttonText:{displayText:'Info Bot'},type:1}]
+               buttons = [{buttonId:`${prefix}owner`,buttonText:{displayText:'Owner'},type:1},{buttonId:`${prefix}info`,buttonText:{displayText:'Info Bot'},type:1}]
 
                buttonsMessage = { contentText: `${menu}`, footerText: 'Sewabot Pc Owner!!!',  buttons: buttons, headerType: 1 }
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})

@@ -367,6 +367,19 @@ module.exports = nino = async (nino, mek) => {
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})
                nino.relayWAMessage(prep)
                break      
+        case 'groupicon':
+              if (!isGroup) return reply(mess.only.group)
+              if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+              if (isQuotedImage) {
+              let encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
+              let media = await nino.downloadMediaMessage(encmedia)
+              nino.updateProfilePicture(from, media)
+             .then((res) => reply(jsonformat(res)))
+             .catch((err) => reply(jsonformat(err)))
+              } else {
+              reply(`Kirim atau tag gambar dengan caption ${prefix}setppgrup`)
+}
+              break
         case 'nhentai':
               if (!isPremium && fromMe) return reply('Khusus Premium')
               if (args.length == 0) return reply(`Example: ${prefix + command} 344253`)
@@ -527,7 +540,7 @@ Berikut menu yang terdapat di Nakano 🤖
 
                buttons = [{buttonId:`${prefix}owner`,buttonText:{displayText:'Owner'},type:1},{buttonId:`${prefix}info`,buttonText:{displayText:'Info Bot'},type:1}]
 
-               buttonsMessage = { contentText: `${menu}`, footerText: 'Sewabot Pc Owner!!!',  buttons: buttons, headerType: 1 }
+               buttonsMessage = { contentText: `${menu}`, footerText: 'Sc Ini Di Susun Oleh Nino x Murphy🤪',  buttons: buttons, headerType: 1 }
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})
                nino.relayWAMessage(prep)
                break
@@ -621,7 +634,7 @@ Berikut menu yang terdapat di Nakano 🤖
 }
 }
              break
-      case 'youtubedl':
+      case 'ytmp4':
              if (args.length < 1) return reply('Link Nya Mana?')
              if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply(mess.error.Iv)
              teks = args.join(' ')

@@ -357,6 +357,24 @@ module.exports = nino = async (nino, mek) => {
             if (!mek.key.fromMe && banChats === true) return
             switch(command){
            
+        case 'antilink':
+              if (!isGroup) return reply(mess.only.group)
+              if (!isBotGroupAdmins) return reply(`Bot Harus jadi Admin`)
+              if (!q) return reply(`Pilih enable atau disable`)
+              if (args[0].toLowerCase() === 'enable'){
+              if (isAntiLink) return reply(`Udah aktif`)
+              antilink.push(from)
+              fs.writeFileSync('./database/group/antilink.json', JSON.stringify(antilink))
+              reply('*「 ANTILINK DI AKTIFKAN 」*\n\nYang Ngirim Link Group Bakal Ke Kick!')
+              } else if (args[0].toLowerCase() === 'disable'){
+              let anu = antilink.indexOf(from)
+              antilink.splice(anu, 1)
+              fs.writeFileSync('./database/group/antilink.json', JSON.stringify(antilink))
+              reply('*「 ANTILINK DI NONAKTIFKAN 」*')
+              } else {
+              reply(`Pilih enable atau disable`)
+}
+              break
         case 'owner':
         case 'creator':
                sendKontak(from, `${owner}`, `${ownerName}`, 'Sibukk!!')
@@ -1150,7 +1168,7 @@ a += `
 }
               break
        case 'infoig':
-              teks = `Jangan Lupa Follow Ig Owner Ya : https://www.instagram.com/nino.chan26/`
+              teks = `Jangan Lupa Follow Ig Owner Ya : https://www.instagram.com/ffzkyaf`
               nino.sendMessage(from, teks, text, { quoted : mek })
               break
        case 'sourcecode': 

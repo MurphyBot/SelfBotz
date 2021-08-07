@@ -602,6 +602,8 @@ Berikut menu yang terdapat di Nakano 🤖
 • ${prefix}group close
 • ${prefix}antilink
 • ${prefix}hidetag
+• ${prefix}promote
+• ${prefix}demote
 
 *PREMIUM*
 • ${prefix}setcmd
@@ -616,6 +618,45 @@ Berikut menu yang terdapat di Nakano 🤖
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})
                nino.relayWAMessage(prep)
                break
+//------------------< demote & promote >-------------------
+case 'demote':
+					if (!isGroup) return reply(ind.groupo())
+					if (!isGroupAdmins) return reply(ind.admin())
+					if (!isBotGroupAdmins) return reply('BOT HARUS JADI ADMIN DULU')
+					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('𝗧𝗮𝗴 𝘁𝗮𝗿𝗴𝗲𝘁 𝘆𝗮𝗻𝗴 𝗶𝗻𝗴𝗶𝗻 𝗱𝗶 𝘁𝗲𝗻𝗱𝗮𝗻𝗴!')
+					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+					if (mentioned.length > 1) {
+						teks = ''
+						for (let _ of mentioned) {
+							teks += `Status adminmu dicopot. Makanya jan jadi beban🏃 :\n`
+							teks += `@_.split('@')[0]`
+						}
+						mentions(teks, mentioned, true)
+						nino.groupDemoteAdmin(from, mentioned)
+					} else {
+						mentions(`YA YAHYA WAHYU @${mentioned[0].split('@')[0]} Jabatan adminmu di copt, Makanya jan jadi beban🏃`, mentioned, true)
+						nino.groupDemoteAdmin(from, mentioned)
+					}
+					break
+case 'promote':
+if (!isGroup) return reply(ind.groupo())
+					if (!isGroupAdmins) return reply(ind.admin())
+					if (!isBotGroupAdmins) return reply('Gimana Mau Promote Bnag Gw Bukan Admin☺')
+					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target yg mau di promote!')
+					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+					if (mentioned.length > 1) {
+						teks = ''
+						for (let _ of mentioned) {
+							teks += `Sekarang Admin`
+							teks += `@_.split('@')[0]`
+						}
+						mentions(teks, mentioned, true)
+						nino.groupMakeAdmin(from, mentioned)
+					} else {
+						mentions(`Sekarang Admin`, mentioned, true)
+						nino.groupMakeAdmin(from, mentioned)
+					}
+					break
 //------------------< Sticker Cmd >-------------------
        case 'addcmd': 
        case 'setcmd':
@@ -811,13 +852,11 @@ break
 )
 break
        case 'buttons3': 
-             if (!Owner && fromMe) return reply('Khusus Member Premium')
              if (!q) return reply('Linknya?')
              if (!q.includes('tiktok')) return reply(mess.error.Iv)
-             reply(mess.wait)
-             anu = await TiktokDownloader(`${q}`)
-            .then((data) => { sendMediaURL(from, data.result.nowatermark) })
-            .catch((err) => { reply(String(err)) })
+             data = await fetchJson(`https://api.lolhuman.xyz/api/tiktok?apikey=${setting.lolkey}&url=${q}`)
+             ini_video = await getBuffer(data.result.link)
+             nino.sendMessage(from, ini_video, video, { quoted: mek })
              break
       case 'buttons4': 
              if (!q) return reply('Linknya?')
@@ -1145,6 +1184,16 @@ a += `
              await sleep(3000)
              process.exit()
              break
+      case 'leave':
+       if (!isOwner) return reply(ind.ownerb()) 
+                      setTimeout( () => {
+                      nino.groupLeave (from) 
+                      }, 2000)
+                      setTimeout( () => {
+                      nino.updatePresence(from, Presence.composing) 
+                      reply('Gw Di Suruh Bye')
+                      }, 0)
+                      break
       case 'leaveall':
              if (!isOwner) return  
              let totalgroup = nino.chats.array.filter(u => u.jid.endsWith('@g.us')).map(u => u.jid)

@@ -506,7 +506,7 @@ buttons = [{buttonId: '${prefix}owner',buttonText:{displayText: 'MINAT'},type:1}
                nino.relayWAMessage(prep)
                break
         case 'rules':
-         info =`-----[ Syarat & Ketentuan ]-----
+         work =`-----[ Syarat & Ketentuan ]-----
 
 1. Jangan spam bot. 
 Sanksi: *WARN/SOFT BLOCK*
@@ -522,12 +522,10 @@ Sanksi: *PERMANENT BAN BLOCK SEND BUG*
 
 Jika sudah dipahami Syarat & Ketentuan-nya, silakan Klik *COMMAND* Di Bawah Ini`
                
-               buttons = [{buttonId: '#menuku',buttonText:{displayText: 'COMMAND'},type:1}]
-
-               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/wpmobile.png`), 'imageMessage')).message.imageMessage
+               buttons = [{buttonId: '#menuku',buttonText:{displayText: 'COMMAND'},type:1}]               
 
                buttonsMessage = {
-               contentText: `${info}`,
+               contentText: `${work}`,
                footerText: 'Created By @Rafa29__', imageMessage: imageMsg,
                buttons: buttons,
                headerType: 4
@@ -580,8 +578,7 @@ break
                nino.relayWAMessage(prep)
                nino.sendMessage(from, murphy, MessageType.audio, {qouted: mek, mimetype: 'audio/mp4', ptt:true})
                break
-        case 'menuku':
-        loli = fs.readFileSync(`./lib/loli.mp3`)  
+        case 'menuku': 
                consttime = moment().tz('Asia/Jakarta').format('HH:mm:ss')
                consttanggal = moment.tz("Asia/Jakarta").format("LLLL")
                menu =`• Hai ${pushname} 👋
@@ -649,8 +646,7 @@ Berikut menu yang terdapat di Nakano 🤖
 
                buttonsMessage = { contentText: `${menu}`, footerText: 'Sewabot Pc Owner!! 24 Jam Online',  buttons: buttons, headerType: 1 }
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})
-               nino.relayWAMessage(prep)
-               nino.sendMessage(from, loli, MessageType.audio, {qouted: mek, mimetype: 'audio/mp4', ptt:true})
+               nino.relayWAMessage(prep) 
                break
 //------------------< demote & promote >-------------------
 case 'demote':

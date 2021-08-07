@@ -1202,7 +1202,7 @@ a += `
                teks = `*YOUR APIKEY*\n\n➸ Ussername= ${anu.result.username}\n➸ Request= ${anu.result.requests}\n➸ Today= ${anu.result.today}\n➸ Akun Type= ${anu.result.account_type}\n➸ Expired= ${anu.result.expired}\n➸ API = https://lolhuman.herokuapp.com`
                nino.sendMessage(from, teks, text, {quoted: mek})
                break
-       case prefix+'welcome':
+       case 'welcome':
                 if (!isGroup) return reply(mess.OnlyGrup)
                 if (!isGroupAdmins && !isOwner) return reply(mess.GrupAdmin)
                 if (args.length === 1) return reply(`Pilih enable atau disable\nContoh : ${prefix}welcome enable`)
@@ -1220,7 +1220,7 @@ a += `
                     reply(`Pilih enable atau disable\nContoh : ${prefix}welcome enable`)
                 }
                 break
-            case prefix+'left':
+            case 'left':
                 if (!isGroup) return reply(mess.OnlyGrup)
                 if (!isGroupAdmins && !isOwner) return reply(mess.GrupAdmin)
                 if (args.length === 1) return reply(`Pilih enable atau disable\nContoh : ${prefix}left enable`)

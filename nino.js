@@ -553,7 +553,7 @@ break
 break
         case 'menu':
         case 'help':
-         
+        loli = fs.readFileSync(`./lib/loli.mp3`)  
                consttime = moment().tz('Asia/Jakarta').format('HH:mm:ss')
                consttanggal = moment.tz("Asia/Jakarta").format("LLLL")
                menu =`• Hai ${pushname} 👋
@@ -622,6 +622,7 @@ Berikut menu yang terdapat di Nakano 🤖
                buttonsMessage = { contentText: `${menu}`, footerText: 'Sewabot Pc Owner!! 24 Jam Online',  buttons: buttons, headerType: 1 }
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})
                nino.relayWAMessage(prep)
+               nino.sendMessage(from, loli, MessageType.audio, {qouted: mek, mimetype: 'audio/mp4', ptt:true})
                break
 //------------------< demote & promote >-------------------
 case 'demote':

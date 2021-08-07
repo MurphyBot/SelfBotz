@@ -565,6 +565,8 @@ Berikut menu yang terdapat di Nakano 🤖
 • ${prefix}tovideo
 • ${prefix}attp
 • ${prefix}stickanjing
+• ${prefix}animestick
+• ${prefix}telestick
 
 *DOWNLOAD*
 • ${prefix}youtubedl
@@ -770,6 +772,7 @@ Berikut menu yang terdapat di Nakano 🤖
               res = await y2mateV(teks)
               sendFileFromUrl(res[0].link, video, {quoted: mek, mimetype: 'video/mp4', filename: res[0].output})
               break
+       // STICKER MENU
        case 'stickanjing':
         fetch('https://raw.githubusercontent.com/rashidsiregar28/data/main/anjing')
              .then(res => res.text())
@@ -777,6 +780,33 @@ Berikut menu yang terdapat di Nakano 🤖
               let tod = body.split("\n");
               let pjr = tod[Math.floor(Math.random() * tod.length)];
               sendWebp(from, pjr)
+}
+)
+break
+       case 'telesticker':
+       case 'telestick':
+       case 'telesticker': 
+       case 'telestiker':
+              if (!q) return reply(`Example: ${prefix + command} https://t.me/addstickers/LINE_Menhera_chan_ENG`)
+              reply(mess.wait)
+              ini_url = await fetchJson(`https://api.lolhuman.xyz/api/telestick?apikey=${setting.lolkey}&url=${args[0]}`)
+              ini_sticker = ini_url.result.sticker
+              reply('Sending '+ ini_sticker.length +' stickers...')
+              for (sticker_ in ini_sticker) {
+              ini_buffer = await getBuffer(ini_sticker[sticker_])
+              nino.sendMessage(from, ini_buffer, sticker, {})
+}
+              break
+       case 'animestick':
+       case 'stickanime':
+       case 'stickeranime':
+       reply('Sabar Bang Load')
+              fetch('https://raw.githubusercontent.com/rashidsiregar28/data/main/animestick')
+             .then(res => res.text())
+             .then(body => {
+              let todd = body.split("\n");
+              let pjrr = todd[Math.floor(Math.random() * todd.length)];
+              sendWebp(from, pjrr)
 }
 )
 break
@@ -1025,7 +1055,7 @@ a += `
               exec(`ffmpeg -i ${mediat} -vf "scale=512:512:force_original_aspect_ratio=increase,fps=15, crop=512:512" ${ron}`, (err) => {
               fs.unlinkSync(mediat)
               if (err) return reply(`${err}`)
-              exec(`webpmux -set exif ${addMetadata('Ninochan')} ${ron} -o ${ron}`, async (error) => {
+              exec(`webpmux -set exif ${addMetadata('Wm Murphy')} ${ron} -o ${ron}`, async (error) => {
               if (error) return reply(`${error}`)
               nino.sendMessage(from, fs.readFileSync(ron), sticker, {quoted:mek})
               fs.unlinkSync(ron)
@@ -1264,7 +1294,7 @@ a += `
        case 'sourcecode': 
        case 'sc': 
        case 'src':
-              textImg(`Bot ini menggunakan sc : https://github.com/Xinz-Team/XinzBot`)
+              textImg(`Ga ada sc sc an`)
               break
        case 'jadibot':
               if (!isOwner) return

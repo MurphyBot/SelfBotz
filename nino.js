@@ -451,7 +451,7 @@ https://wa.me/994409002319
 *• Murphy<Ya Gua>*
 *• Lolhuman*`
                
-               buttons = [{buttonId: `${prefix}rules0`,buttonText:{displayText: 'Syarat & Ketentuan'},type:1},{buttonId:`${prefix}owner`,buttonText:{displayText:'Other's Bot'},type:1}]
+               buttons = [{buttonId: '${prefix}rules0',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
 
@@ -466,7 +466,7 @@ https://wa.me/994409002319
                nino.relayWAMessage(prep)
                break
          case 'sewabot':
-         teksnya = `*── 「 PRICE LIST 」 ──*
+         teksnya =`*── 「 PRICE LIST 」 ──*
 
 *Tarif Premium User adalah 10K Perbulan*
 *Keuntungan Premium Diantaranya:*

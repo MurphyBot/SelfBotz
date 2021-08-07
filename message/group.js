@@ -1,3 +1,4 @@
+"use strict";
 const {
 	MessageType,
 	Presence
@@ -6,13 +7,13 @@ const fs = require("fs");
 
 const { getBuffer, sleep } = require("../lib/myfunc");
 
-let setting = JSON.parse(fs.readFileSync('./config.json'));
+let setting = JSON.parse(fs.readFileSync('./setting.json'))
 let { botName } = setting
 
 module.exports = async(nino, anj, welcome, left) => {
     const isWelcome = welcome.includes(anj.jid)
     const isLeft = left.includes(anj.jid)
-    const mdata = await xinz.groupMetadata(anj.jid)
+    const mdata = await nino.groupMetadata(anj.jid)
     const groupName = mdata.subject
 
     if (anj.action === 'add'){

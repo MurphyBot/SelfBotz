@@ -1203,23 +1203,21 @@ a += `
                nino.sendMessage(from, teks, text, {quoted: mek})
                break
        case 'welcome':
-                if (!isGroup) return reply(mess.OnlyGrup)
-                if (!isGroupAdmins && !isOwner) return reply(mess.GrupAdmin)
-                if (args.length === 1) return reply(`Pilih enable atau disable\nContoh : ${prefix}welcome enable`)
-                if (args[1].toLowerCase() === 'enable'){
-                    if (isWelcome) return reply(`Udah aktif`)
-                    welcome.push(from)
-					fs.writeFileSync('./database/welcome.json', JSON.stringify(welcome))
-					reply('Welcome aktif')
-                } else if (args[1].toLowerCase() === 'disable'){
-                    let anu = welcome.indexOf(from)
-                    welcome.splice(anu, 1)
-                    fs.writeFileSync('./database/welcome.json', JSON.stringify(welcome))
-                    reply('Welcome nonaktif')
-                } else {
-                    reply(`Pilih enable atau disable\nContoh : ${prefix}welcome enable`)
-                }
-                break
+               if (!isGroup) return reply(mess.only.group)
+               if (args.length < 1) return reply('!welcome enable/disable')
+               if ((args[0]) === 'enable') {
+               if (isWelkom) return reply('Udah aktif')
+               welkom.push(from)
+               fs.writeFileSync('./database/welcome.json', JSON.stringify(welkom))
+               reply('Sukses mengaktifkan fitur welcome di group ini ✔️')
+               } else if ((args[0]) === 'disable') {
+               welkom.splice(from, 1)
+               fs.writeFileSync('./database/welcome.json', JSON.stringify(welkom))
+               reply('Sukses menonaktifkan fitur welcome di group ini ✔️')
+               } else {
+               reply('Enable untuk mengaktifkan, disable untuk menonaktifkan')
+}
+               break
             case 'left':
                 if (!isGroup) return reply(mess.OnlyGrup)
                 if (!isGroupAdmins && !isOwner) return reply(mess.GrupAdmin)

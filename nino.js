@@ -347,6 +347,8 @@ module.exports = nino = async (nino, mek) => {
 		const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
 
       
+         // Auto Read (BY MURPHY API's)
+        nino.chatRead(from, "read")
          // CMD
         if (isCmd && !isGroup)
             console.log(color('[ CMD ]'), color(time, 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname))
@@ -1200,22 +1202,42 @@ a += `
                teks = `*YOUR APIKEY*\n\n➸ Ussername= ${anu.result.username}\n➸ Request= ${anu.result.requests}\n➸ Today= ${anu.result.today}\n➸ Akun Type= ${anu.result.account_type}\n➸ Expired= ${anu.result.expired}\n➸ API = https://lolhuman.herokuapp.com`
                nino.sendMessage(from, teks, text, {quoted: mek})
                break
-       case 'welcome':
-               if (!isGroup) return reply(mess.only.group)
-               if (args.length < 1) return reply('!welcome enable/disable')
-               if ((args[0]) === 'enable') {
-               if (isWelkom) return reply('Udah aktif')
-               welkom.push(from)
-               fs.writeFileSync('./database/group/welcome.json', JSON.stringify(welkom))
-               reply('Sukses mengaktifkan fitur welcome di group ini ✔️')
-               } else if ((args[0]) === 'disable') {
-               welkom.splice(from, 1)
-               fs.writeFileSync('./database/group/welcome.json', JSON.stringify(welkom))
-               reply('Sukses menonaktifkan fitur welcome di group ini ✔️')
-               } else {
-               reply('Enable untuk mengaktifkan, disable untuk menonaktifkan')
-}
-               break
+       case prefix+'welcome':
+                if (!isGroup) return reply(mess.OnlyGrup)
+                if (!isGroupAdmins && !isOwner) return reply(mess.GrupAdmin)
+                if (args.length === 1) return reply(`Pilih enable atau disable\nContoh : ${prefix}welcome enable`)
+                if (args[1].toLowerCase() === 'enable'){
+                    if (isWelcome) return reply(`Udah aktif`)
+                    welcome.push(from)
+					fs.writeFileSync('./database/welcome.json', JSON.stringify(welcome))
+					reply('Welcome aktif')
+                } else if (args[1].toLowerCase() === 'disable'){
+                    let anu = welcome.indexOf(from)
+                    welcome.splice(anu, 1)
+                    fs.writeFileSync('./database/welcome.json', JSON.stringify(welcome))
+                    reply('Welcome nonaktif')
+                } else {
+                    reply(`Pilih enable atau disable\nContoh : ${prefix}welcome enable`)
+                }
+                break
+            case prefix+'left':
+                if (!isGroup) return reply(mess.OnlyGrup)
+                if (!isGroupAdmins && !isOwner) return reply(mess.GrupAdmin)
+                if (args.length === 1) return reply(`Pilih enable atau disable\nContoh : ${prefix}left enable`)
+                if (args[1].toLowerCase() === 'enable'){
+                    if (isLeft) return reply(`Udah aktif`)
+                    left.push(from)
+					fs.writeFileSync('./database/left.json', JSON.stringify(left))
+					reply('Left aktif')
+                } else if (args[1].toLowerCase() === 'disable'){
+                    let anu = left.indexOf(from)
+                    left.splice(anu, 1)
+                    fs.writeFileSync('./database/left.json', JSON.stringify(left))
+                    reply('Left nonaktif')
+                } else {
+                    reply(`Pilih enable atau disable\nContoh : ${prefix}left enable`)
+                }
+                break
        case 'infoig':
               teks = `Jangan Lupa Follow Ig Owner Ya : https://www.instagram.com/ffzkyaf`
               nino.sendMessage(from, teks, text, { quoted : mek })

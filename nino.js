@@ -451,7 +451,7 @@ https://wa.me/994409002319
 *• Murphy<Ya Gua>*
 *• Lolhuman*`
                
-               buttons = [{buttonId: '${prefix}rules0',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
+               buttons = [{buttonId: `${prefix}rules0`,buttonText:{displayText: 'Syarat & Ketentuan'},type:1},{buttonId:`${prefix}owner`,buttonText:{displayText:'Other's Bot'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
 
@@ -512,7 +512,7 @@ Sanksi: *PERMANENT BAN BLOCK SEND BUG*
 
 Jika sudah dipahami Syarat & Ketentuan-nya, silakan Klik *COMMAND* Di Bawah Ini`
                
-               buttons = [{buttonId: '#menu',buttonText:{displayText: 'COMMAND'},type:1}]
+               buttons = [{buttonId: '${prefix}menu',buttonText:{displayText: 'COMMAND'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/Nakano.jpg`), 'imageMessage')).message.imageMessage
 

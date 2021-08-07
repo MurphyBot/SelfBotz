@@ -1,56 +1,40 @@
+"use strict";
 const {
-	MessageType
+	MessageType,
+	Presence
 } = require("@adiwajshing/baileys");
-const fs = require("fs-extra")
+const fs = require("fs");
 
-const { getBuffer } = require('../lib/myfunc')
-const { color, bgcolor } = require('../lib/color')
+const { getBuffer, sleep } = require("../lib/myfunc");
 
-let setting = JSON.parse(fs.readFileSync('./setting.json'))
+let setting = JSON.parse(fs.readFileSync('./config.json'));
+let { botName } = setting
 
-module.exports = welcome = async (nino, anu) => {
-	    const welkom = JSON.parse(fs.readFileSync('./database/group/welcome.json'))
-	    const isWelcome = welkom.includes(anu.jid)
-	    if (!isWelcome) return
-		try {
-			    mem = anu.participants[0]
-			    console.log(anu)
-                try {
-                pp_user = await nino.getProfilePicture(mem)
-                } catch (e) {
-                pp_user = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60'
+module.exports = async(xinz, anj, welcome, left) => {
+    const isWelcome = welcome.includes(anj.jid)
+    const isLeft = left.includes(anj.jid)
+    const mdata = await xinz.groupMetadata(anj.jid)
+    const groupName = mdata.subject
+
+    if (anj.action === 'add'){
+        if (anj.participants[0] === xinz.user.jid){
+            await sleep(5000)
+            xinz.updatePresence(anj.jid, Presence.composing)
+            xinz.sendMessage(anj.jid, `Hai aku ${botName}, silahkan kirim #menu`, MessageType.text)
+        } else if (isWelcome){
+            try {
+                var pic = await xinz.getProfilePicture(anj.participants[0])
+            } catch {
+                var pic = 'https://i.ibb.co/Tq7d7TZ/age-hananta-495-photo.png'
             }
-                try {
-                pp_grup = await nino.getProfilePicture(anu.jid)
-                } catch (e) {
-                pp_grup = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60'
-            }
-            if (anu.action == 'add' && mem.includes(nino.user.jid)) {
-            nino.sendMessage(anu.jid, 'Halo! Terima Kasih sudah Mengundangku, Jika ingin Menggunakan Bot Ketik !menu', 'conversation')
-            }
-             if (anu.action == 'add' && !mem.includes(nino.user.jid)) {
-             if (!welkom.includes(anu.jid)) return
-                mdata = await nino.groupMetadata(anu.jid)
-                memeg = mdata.participants.length
-            	num = anu.participants[0]
-                let v = nino.contacts[num] || { notify: num.replace(/@.+/, '') }
-                anu_user = v.vname || v.notify || num.split('@')[0]
-                teks = `Halo ${anu_user} \n\nNama : \nUmur :\nGender : \nAsal :\n\nSemoga Betah dan jangan lupa isi`
-	            buff = await getBuffer(`http://hadi-api.herokuapp.com/api/card/welcome?nama=${num.split('@')[0]}&descriminator=${memeg}&memcount=${memeg}&gcname=${encodeURI(mdata.subject)}&pp=${pp_user}&bg=https://telegra.ph/file/841db869a5bb2cced77c9.jpg`)
-		        nino.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
-		}
-            if (anu.action == 'remove' && !mem.includes(nino.user.jid)) {
-            if (!welkom.includes(anu.jid)) return
-                mdata = await nino.groupMetadata(anu.jid)
-            	num = anu.participants[0]
-                let w = nino.contacts[num] || { notify: num.replace(/@.+/, '') }
-                anu_user = w.vname || w.notify || num.split('@')[0]
-                memeg = mdata.participants.length
-                out = `Kenapa tuh? kok bisa keluar? \nSayonara ${anu_user} we will miss you`
-                buff = await getBuffer(`http://hadi-api.herokuapp.com/api/card/goodbye?nama=${num.split('@')[0]}&descriminator=${memeg}&memcount=${memeg}&gcname=${encodeURI(mdata.subject)}&pp=${pp_user}&bg=https://telegra.ph/file/0de9e05e9ebaf276b848e.jpg`)
-                nino.sendMessage(mdata.id, buff, MessageType.image, {caption: out, contextInfo: {"mentionedJid": [num]}})
-            }
-		} catch (e) {
-			console.log('Error : %s', color(e, 'red'))
-		}
-	}
+            xinz.sendMessage(anj.jid, await getBuffer(pic), MessageType.image, {caption: `Hai @${anj.participants[0].split("@")[0]}, selamat datang di ${groupName}`, contextInfo: {"mentionedJid": [anj.participants[0]]}})
+        }
+    } else if (anj.action === 'remove' && isLeft){
+        try {
+            var pic = await xinz.getProfilePicture(anj.participants[0])
+        } catch {
+            var pic = 'https://i.ibb.co/Tq7d7TZ/age-hananta-495-photo.png'
+        }
+        xinz.sendMessage(anj.jid, await getBuffer(pic), MessageType.image, {caption: `Sayonara @${anj.participants[0].split("@")[0]}`, contextInfo: {"mentionedJid": [anj.participants[0]]}})
+    }
+}

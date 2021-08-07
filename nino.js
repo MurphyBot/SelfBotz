@@ -448,12 +448,20 @@ https://wa.me/994409002319
 *• Status :* Public
 *• Prefix :* ${prefix}
 
-*Special Tahnks To :*
+*Special Thanks To :*
 *• Nino*
 *• Murphy<Ya Gua>*
-*• Lolhuman*`
+*• Lolhuman*
+─┬──────────┈ ⳹
+┌┤➤ *DEVELOPER*
+│ • SCRIPT INI DI SUSUN OLEH
+│ • DEVELOPER DI BAWAH INI
+├┬───────┈ ⳹
+│ • _MarzTzy / Nino_
+│ • _Rafa / Murphy_
+╰────────┈`
                
-               buttons = [{buttonId: '${prefix}rules0',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
+               buttons = [{buttonId: '${prefix}rules',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
 
@@ -497,7 +505,7 @@ buttons = [{buttonId: '${prefix}owner',buttonText:{displayText: 'MINAT'},type:1}
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
                nino.relayWAMessage(prep)
                break
-        case 'rules0':
+        case 'rules':
          info =`-----[ Syarat & Ketentuan ]-----
 
 1. Jangan spam bot. 
@@ -514,9 +522,9 @@ Sanksi: *PERMANENT BAN BLOCK SEND BUG*
 
 Jika sudah dipahami Syarat & Ketentuan-nya, silakan Klik *COMMAND* Di Bawah Ini`
                
-               buttons = [{buttonId: '${prefix}menu',buttonText:{displayText: 'COMMAND'},type:1}]
+               buttons = [{buttonId: '#menuku',buttonText:{displayText: 'COMMAND'},type:1}]
 
-               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/Nakano.jpg`), 'imageMessage')).message.imageMessage
+               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/wpmobile.png`), 'imageMessage')).message.imageMessage
 
                buttonsMessage = {
                contentText: `${info}`,
@@ -553,6 +561,26 @@ break
 break
         case 'menu':
         case 'help':
+        murphy = fs.readFileSync(`./lib/wmmurphy.mp3`)
+        mark = '994409002319@s.whatsapp.net'
+               menu =`Hallo Kak ${pushname} Silahkan Klik Syarat & Ketentuan Untuk Melihat Command Kayess bot`
+               
+               buttons = [{buttonId: '#rules',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
+
+               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/murphy.jpg`), 'imageMessage')).message.imageMessage
+
+               buttonsMessage = {
+               contentText: `${menu}`,
+               footerText: 'Sewabot Pc Owner 24 Jam Online!!!', imageMessage: imageMsg,
+               buttons: buttons,
+               headerType: 4
+}
+
+               prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
+               nino.relayWAMessage(prep)
+               nino.sendMessage(from, murphy, MessageType.audio, {qouted: mek, mimetype: 'audio/mp4', ptt:true})
+               break
+        case 'menuku':
         loli = fs.readFileSync(`./lib/loli.mp3`)  
                consttime = moment().tz('Asia/Jakarta').format('HH:mm:ss')
                consttanggal = moment.tz("Asia/Jakarta").format("LLLL")

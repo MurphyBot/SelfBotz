@@ -564,6 +564,7 @@ Berikut menu yang terdapat di Nakano 🤖
 • ${prefix}toimg
 • ${prefix}tovideo
 • ${prefix}attp
+• ${prefix}stickanjing
 
 *DOWNLOAD*
 • ${prefix}youtubedl
@@ -571,6 +572,7 @@ Berikut menu yang terdapat di Nakano 🤖
 • ${prefix}igdl
 • ${prefix}mediafire
 • ${prefix}tiktok
+
 *SEARCH*
 • ${prefix}pinterest
 
@@ -739,7 +741,7 @@ Berikut menu yang terdapat di Nakano 🤖
               buttons = [{buttonId: `${prefix}buttons5 ${q}`,buttonText:{displayText: `WM`},type:1},{buttonId:`${prefix}buttons4 ${q}`,buttonText:{displayText:'MUSIC'},type:1},{buttonId:`${prefix}buttons3 ${q}`,buttonText:{displayText:'NOWM'},type:1}]
               fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(data.result.thumbnail))
               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'imageMessage', {thumbnail: Buffer.alloc(0)})).message.imageMessage
-              buttonsMessage = {footerText:'Mau Di Sajikan Watermark/Nowatermark/Music PilihDi Bawah yak', imageMessage: imageMsg,
+              buttonsMessage = {footerText:'Mau Di Sajikan Apa Watermark/Nowatermark/Music PilihDi Bawah yak', imageMessage: imageMsg,
               contentText:`${result}`,buttons,headerType:4}
               prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               nino.relayWAMessage(prep)
@@ -768,13 +770,24 @@ Berikut menu yang terdapat di Nakano 🤖
               res = await y2mateV(teks)
               sendFileFromUrl(res[0].link, video, {quoted: mek, mimetype: 'video/mp4', filename: res[0].output})
               break
+       case 'stickanjing':
+        fetch('https://raw.githubusercontent.com/rashidsiregar28/data/main/anjing')
+             .then(res => res.text())
+             .then(body => {
+              let tod = body.split("\n");
+              let pjr = tod[Math.floor(Math.random() * tod.length)];
+              sendWebp(from, pjr)
+}
+)
+break
        case 'buttons3': 
-             if (!isOwner && fromMe) return reply('Khusus Member Premium kak ?')
+             if (!Owner && fromMe) return reply('Khusus Member Premium')
              if (!q) return reply('Linknya?')
              if (!q.includes('tiktok')) return reply(mess.error.Iv)
-             data = await fetchJson(`https://api.lolhuman.xyz/api/tiktok?apikey=${setting.lolkey}&url=${q}`)
-             ini_video = await getBuffer(data.result.link)
-             nino.sendMessage(from, ini_video, video, { quoted: mek })
+             reply(mess.wait)
+             anu = await TiktokDownloader(`${q}`)
+            .then((data) => { sendMediaURL(from, data.result.nowatermark) })
+            .catch((err) => { reply(String(err)) })
              break
       case 'buttons4': 
              if (!q) return reply('Linknya?')
@@ -1251,7 +1264,7 @@ a += `
        case 'sourcecode': 
        case 'sc': 
        case 'src':
-              textImg(`Bot ini menggunakan sc : https://github.com/Xinz-Team/Xinz-Bot`)
+              textImg(`Bot ini menggunakan sc : https://github.com/Xinz-Team/XinzBot`)
               break
        case 'jadibot':
               if (!isOwner) return

@@ -547,6 +547,10 @@ Jika sudah dipahami Syarat & Ketentuan-nya, silakan Klik *COMMAND* Di Bawah Ini`
              reply('Suksess broadcast')
 }
 break
+        case 'faxbotz':
+        loli = fs.readFileSync(`./lib/loli.mp3`)
+        nini.sendMessage(from, loli, MessageType.audio, {qouted: mek, mimetype: 'audio/mp4', ptt:true})
+break
         case 'menu':
         case 'help':
                consttime = moment().tz('Asia/Jakarta').format('HH:mm:ss')

@@ -566,12 +566,11 @@ Berikut menu yang terdapat di Nakano 🤖
 • ${prefix}attp
 
 *DOWNLOAD*
-• ${prefix}ytmp4
-• ${prefix}ytmp3
+• ${prefix}youtubedl
 • ${prefix}play
 • ${prefix}igdl
 • ${prefix}mediafire
-
+• ${prefix}tiktok
 *SEARCH*
 • ${prefix}pinterest
 
@@ -703,7 +702,7 @@ Berikut menu yang terdapat di Nakano 🤖
 }
 }
              break
-      case 'ytmp4':
+      case 'youtubedl':
              if (args.length < 1) return reply('Link Nya Mana?')
              if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply(mess.error.Iv)
              teks = args.join(' ')
@@ -724,15 +723,23 @@ Berikut menu yang terdapat di Nakano 🤖
               nino.relayWAMessage(prep)
               fs.unlinkSync(`./ytmp.jpeg`)
               break
-       case 'tiktokdl':
+       case 'buttons5': 
+             if (!q) return reply('Linknya?')
+             if (!q.includes('tiktok')) return reply(mess.error.Iv)
+             reply(mess.wait)
+             anu = await TiktokDownloader(`${q}`)
+            .then((data) => { sendMediaURL(from, data.result.watermark) })
+            .catch((err) => { reply(String(err)) })
+             break
+       case 'tiktok':
               if (!q) return reply('Linknya?')
               if (!q.includes('tiktok')) return reply(mess.error.Iv)
               data = await fetchJson(`https://api.lolhuman.xyz/api/tiktok?apikey=${setting.lolkey}&url=${q}`)
               result = `⚜️ *Nickname*: ${data.result.author.nickname}\n❤️ *Like*: ${data.result.statistic.diggCount}\n💬 *Komentar*: ${data.result.statistic.commentCount}\n🔁 *Share*: ${data.result.statistic.shareCount}\n🎞️ *Views*: ${data.result.statistic.playCount}\n📑 *Desc*: ${data.result.title}`
-              buttons = [{buttonId: `${prefix}buttons3 ${q}`,buttonText:{displayText: `▶️ Video`},type:1},{buttonId:`${prefix}buttons4 ${q}`,buttonText:{displayText:'🎵 Audio'},type:1}]
+              buttons = [{buttonId: `${prefix}buttons5 ${q}`,buttonText:{displayText: `WM`},type:1},{buttonId:`${prefix}buttons4 ${q}`,buttonText:{displayText:'MUSIC'},type:1},{buttonId:`${prefix}buttons3 ${q}`,buttonText:{displayText:'NOWM'},type:1}]
               fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(data.result.thumbnail))
               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'imageMessage', {thumbnail: Buffer.alloc(0)})).message.imageMessage
-              buttonsMessage = {footerText:'Pilih satu format di bawah ini', imageMessage: imageMsg,
+              buttonsMessage = {footerText:'Mau Di Sajikan Watermark/Nowatermark/Music PilihDi Bawah yak', imageMessage: imageMsg,
               contentText:`${result}`,buttons,headerType:4}
               prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               nino.relayWAMessage(prep)
@@ -762,6 +769,7 @@ Berikut menu yang terdapat di Nakano 🤖
               sendFileFromUrl(res[0].link, video, {quoted: mek, mimetype: 'video/mp4', filename: res[0].output})
               break
        case 'buttons3': 
+             if (!isOwner && fromMe) return reply('Khusus Member Premium kak ?')
              if (!q) return reply('Linknya?')
              if (!q.includes('tiktok')) return reply(mess.error.Iv)
              data = await fetchJson(`https://api.lolhuman.xyz/api/tiktok?apikey=${setting.lolkey}&url=${q}`)
@@ -770,9 +778,9 @@ Berikut menu yang terdapat di Nakano 🤖
              break
       case 'buttons4': 
              if (!q) return reply('Linknya?')
-             if (!q.includes('tiktok')) return reply(mess.error.Iv)
-             data = await getBuffer(`https://api.lolhuman.xyz/api/tiktokmusic?apikey=${setting.lolkey}&url=${args[0]}`)
-             nino.sendMessage(from, data, audio, { quoted: mek })
+             if (!q.includes('tiktok')) return reply(mess.error.Iv)             
+             get_audio = await getBuffer(`https://api.lolhuman.xyz/api/tiktokmusic?apikey=${setting.lolkey}&url=${args[0]}`)
+             nino.sendMessage(from, get_audio, audio, { mimetype: Mimetype.mp4Audio, quoted: mek })
              break
       case 'google':
               if (!q) return reply(mess.wrongFormat)

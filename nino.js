@@ -451,7 +451,7 @@ https://wa.me/994409002319
 *• Murphy<Ya Gua>*
 *• Lolhuman*`
                
-               buttons = [{buttonId: '#rulesnihajg',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
+               buttons = [{buttonId: '${prefix}rules0',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
 
@@ -465,7 +465,37 @@ https://wa.me/994409002319
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
                nino.relayWAMessage(prep)
                break
-        case 'rulesnihajg':
+         case 'sewabot':
+         teksnya = `*── 「 PRICE LIST 」 ──*
+
+*Tarif Premium User adalah 10K Perbulan*
+*Keuntungan Premium Diantaranya:*
+♲ *Bebas memakai fitur premium*
+♲ *Dapat Informasi Lebih dulu akan Update, Nomor Bot Baru (Jika Terbanned), dan Lainnya*
+
+*Jika Tertarik,Kalian Bisa Bayar Melalui Metode Pembayaran di Bawah:*
+*Dana : 083872131057*
+
+*Info Lebih Lengkap Chat Owner, Ketik ${prefix}owner*
+*_note_*:
+*Pembelian Premium yang disertai SewaBot hanya akan membayar 20K (Diskon 5K)*
+*Minat? Klik Dibawah Ini*`
+              
+buttons = [{buttonId: '${prefix}owner',buttonText:{displayText: 'MINAT'},type:1}]
+
+               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
+
+               buttonsMessage = {
+               contentText: `${teksnya}`,
+               footerText: 'Created By @Rafa29__', imageMessage: imageMsg,
+               buttons: buttons,
+               headerType: 4
+}
+
+               prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
+               nino.relayWAMessage(prep)
+               break
+        case 'rules0':
          info =`-----[ Syarat & Ketentuan ]-----
 
 1. Jangan spam bot. 
@@ -496,6 +526,25 @@ Jika sudah dipahami Syarat & Ketentuan-nya, silakan Klik *COMMAND* Di Bawah Ini`
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
                nino.relayWAMessage(prep)
                break
+         case 'bc':
+         case 'broadcast':
+         if (!isOwner) return  reply(mess.only.owner)
+             if (args.length < 1) return reply('teks?')
+             anu = await nino.chats.all()
+             if (isMedia && !mek.message.videoMessage || isQuotedImage) {
+             const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
+             bc = await nino.downloadMediaMessage(encmedia)
+             for (let _ of anu) {
+             nino.sendMessage(_.jid, bc, image, {quoted:freply,caption: `*「 PESAN SIARAN BOT 」*\n\n${body.slice(4)}`})
+}
+             reply('Suksess broadcast')
+             } else {
+             for (let _ of anu) {
+             sendMess(_.jid, `*「 PESAN SIARAN BOT 」*\n\n${body.slice(4)}`)
+}
+             reply('Suksess broadcast')
+}
+break
         case 'menu':
         case 'help':
                consttime = moment().tz('Asia/Jakarta').format('HH:mm:ss')
@@ -558,7 +607,7 @@ Berikut menu yang terdapat di Nakano 🤖
 
                buttons = [{buttonId:`${prefix}owner`,buttonText:{displayText:'Owner'},type:1},{buttonId:`${prefix}info`,buttonText:{displayText:'Info Bot'},type:1}]
 
-               buttonsMessage = { contentText: `${menu}`, footerText: 'Sewa🤖 Pc Owner!! 24 Jam Online',  buttons: buttons, headerType: 1 }
+               buttonsMessage = { contentText: `${menu}`, footerText: 'Sewabot Pc Owner!! 24 Jam Online',  buttons: buttons, headerType: 1 }
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})
                nino.relayWAMessage(prep)
                break

@@ -401,7 +401,7 @@ module.exports = nino = async (nino, mek) => {
 }
               break
         case 'nhentai':
-              if (!isPremium && fromMe) return reply('Khusus Premium')
+              if (!isOwner && fromMe) return reply('Khusus Premium')
               if (args.length == 0) return reply(`Example: ${prefix + command} 344253`)
               reply(mess.wait)
               henid = args[0]

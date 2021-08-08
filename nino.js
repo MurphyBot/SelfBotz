@@ -42,6 +42,7 @@ const exif = new Exif();
 const { getBuffer, getGroupAdmins, getRandom, runtime, sleep } = require('./lib/myfunc')
 const { fetchJson, getBase64, kyun, createExif } = require('./lib/fetch')
 const { color, bgcolor } = require('./lib/color')
+const { other } = require('./message/help.js')
 const { mess } = require('./message/mess')
 const { Toxic } = require('./lib/Toxic.js')
 const { cmdadd } = require('./lib/totalcmd.js')
@@ -461,7 +462,7 @@ https://wa.me/994409002319
 │ • _Rafa / Murphy_
 ╰────────┈`
                
-               buttons = [{buttonId: '${prefix}rules',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
+               buttons = [{buttonId: '#owner2',buttonText:{displayText: 'Other's Bot'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
 
@@ -522,13 +523,13 @@ Sanksi: *PERMANENT BAN BLOCK SEND BUG*
 
 Jika sudah dipahami Syarat & Ketentuan-nya, silakan Klik *COMMAND* Di Bawah Ini`
                
-               buttons = [{buttonId: '#menuku',buttonText:{displayText: 'COMMAND'},type:1}]               
+               buttons = [{buttonId: '#menuku',buttonText:{displayText: 'MENU'},type:1}]               
 
                buttonsMessage = {
                contentText: `${work}`,
                footerText: 'Created By @Rafa29__', imageMessage: imageMsg,
                buttons: buttons,
-               headerType: 4
+               headerType: 1
 }
 
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
@@ -557,6 +558,10 @@ break
         loli = fs.readFileSync(`./lib/loli.mp3`)
         nino.sendMessage(from, loli, MessageType.audio, {qouted: mek, mimetype: 'audio/mp4', ptt:true})
 break
+        case 'owner2':
+        nino.sendImage(from, fs.readFileSync('./media/murphy.jpg'), other(prefix, setting.emote), msg, ['994409002319@s.whatsapp.net', '6288286421519@s.whatsapp.net'])
+            }
+        break
         case 'menu':
         case 'help':
         murphy = fs.readFileSync(`./lib/wmmurphy.mp3`)

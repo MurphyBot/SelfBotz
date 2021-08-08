@@ -170,7 +170,7 @@ module.exports = nino = async (nino, mek) => {
 
         
         const listmsg = (from, title, desc, list) => { // ngeread nya pake rowsId, jadi command nya ga keliatan
-            let po = nino.prepareMessageFromContent(from, {"listMessage": {"title": title,"description": desc,"buttonText": "Pilih Disini","footerText": "Sewabot Pc Owner!!","listType": "SINGLE_SELECT","sections": list}}, {})
+            let po = nino.prepareMessageFromContent(from, {"listMessage": {"title": title,"description": desc,"buttonText": "Pilih Disini","footerText": "Jangan Lupa Donasi Ya Kak ☕","listType": "SINGLE_SELECT","sections": list}}, {})
             return nino.relayWAMessage(po, {waitForAck: true})
         }
         
@@ -347,8 +347,6 @@ module.exports = nino = async (nino, mek) => {
 		const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
 
       
-         // Auto Read (BY MURPHY API's)
-        nino.chatRead(from, "read")
          // CMD
         if (isCmd && !isGroup)
             console.log(color('[ CMD ]'), color(time, 'yellow'), color(`${command} [${args.length}]`), 'from', color(pushname))
@@ -359,24 +357,6 @@ module.exports = nino = async (nino, mek) => {
             if (!mek.key.fromMe && banChats === true) return
             switch(command){
            
-        case 'antilink':
-              if (!isGroup) return reply(mess.only.group)
-              if (!isBotGroupAdmins) return reply(`Bot Harus jadi Admin`)
-              if (!q) return reply(`Pilih enable atau disable`)
-              if (args[0].toLowerCase() === 'enable'){
-              if (isAntiLink) return reply(`Udah aktif`)
-              antilink.push(from)
-              fs.writeFileSync('./database/group/antilink.json', JSON.stringify(antilink))
-              reply('*「 ANTILINK DI AKTIFKAN 」*\n\nYang Ngirim Link Group Bakal Ke Kick!')
-              } else if (args[0].toLowerCase() === 'disable'){
-              let anu = antilink.indexOf(from)
-              antilink.splice(anu, 1)
-              fs.writeFileSync('./database/group/antilink.json', JSON.stringify(antilink))
-              reply('*「 ANTILINK DI NONAKTIFKAN 」*')
-              } else {
-              reply(`Pilih enable atau disable`)
-}
-              break
         case 'owner':
         case 'creator':
                sendKontak(from, `${owner}`, `${ownerName}`, 'Sibukk!!')
@@ -387,310 +367,44 @@ module.exports = nino = async (nino, mek) => {
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})
                nino.relayWAMessage(prep)
                break      
-        case 'groupicon':
-              if (!isGroup) return reply(mess.only.group)
-              if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-              if (isQuotedImage) {
-              let encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-              let media = await nino.downloadMediaMessage(encmedia)
-              nino.updateProfilePicture(from, media)
-             .then((res) => reply(jsonformat(res)))
-             .catch((err) => reply(jsonformat(err)))
-              } else {
-              reply(`Kirim atau tag gambar dengan caption ${prefix}setppgrup`)
-}
-              break
-        case 'nhentai':
-              if (!isOwner && fromMe) return reply('Khusus Premium')
-              if (args.length == 0) return reply(`Example: ${prefix + command} 344253`)
-              reply(mess.wait)
-              henid = args[0]
-              get_result = await fetchJson(`https://api.lolhuman.xyz/api/nhentai/${henid}?apikey=AurelCans`)
-              get_result = get_result.result
-              ini_txt = `Title Romaji : ${get_result.title_romaji}\n`
-              ini_txt += `Title Native : ${get_result.title_native}\n`
-              ini_txt += `Read Online : ${get_result.read}\n`
-              get_info = get_result.info
-              ini_txt += `Parodies : ${get_info.parodies}\n`
-              ini_txt += `Character : ${get_info.characters.join(", ")}\n`
-              ini_txt += `Tags : ${get_info.tags.join(", ")}\n`
-              ini_txt += `Artist : ${get_info.artists}\n`
-              ini_txt += `Group : ${get_info.groups}\n`
-              ini_txt += `Languager : ${get_info.languages.join(", ")}\n`
-              ini_txt += `Categories : ${get_info.categories}\n`
-              ini_txt += `Pages : ${get_info.pages}\n`
-              ini_txt += `Uploaded : ${get_info.uploaded}\n`
-              reply(ini_txt)
-              break
-        case 'sewabot':
-              gopeynya = 'https://telegra.ph/file/97bb0051b5c12e492bdd1.jpg'
-              teksnya = `*── 「 PRICE LIST 」 ──*
-
-*Tarif Premium User adalah 10K Perbulan*
-*Keuntungan Premium Diantaranya:*
-♲ *Bebas memakai fitur premium*
-♲ *Dapat Informasi Lebih dulu akan Update, Nomor Bot Baru (Jika Terbanned), dan Lainnya*
-
-*Jika Tertarik,Kalian Bisa Bayar Melalui Metode Pembayaran di Bawah:*
-*Dana : 083872131057*
-
-*Info Lebih Lengkap Chat Owner, Ketik ${prefix}owner*
-*_note_*:
-*Pembelian Premium yang disertai SewaBot hanya akan membayar 20K (Diskon 5K)*`
-              nino.sendMessage(from, await getBuffer(gopeynya), image, {quoted: mek, caption: teksnya })
-              break
-         case 'info':
-         info =`Information Softbot
-*• Name :* Softbot
-*• Number :* 
-https://wa.me/994409002319
-*• Owner :* Rafa29
-*• Status :* Public
-*• Prefix :* ${prefix}
-
-*Special Thanks To :*
-*• Nino*
-*• Murphy<Ya Gua>*
-*• Lolhuman*
-─┬──────────┈ ⳹
-┌┤➤ *DEVELOPER*
-│ • SCRIPT INI DI SUSUN OLEH
-│ • DEVELOPER DI BAWAH INI
-├┬───────┈ ⳹
-│ • _MarzTzy / Nino_
-│ • _Rafa / Murphy_
-╰────────┈`
-               
-               buttons = [{buttonId: '#owner',buttonText:{displayText: 'Other's Bot'},type:1}]
-
-               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
-
-               buttonsMessage = {
-               contentText: `${info}`,
-               footerText: 'Created By @Rafa29__', imageMessage: imageMsg,
-               buttons: buttons,
-               headerType: 4
-}
-
-               prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
-               nino.relayWAMessage(prep)
-               break
-         case 'sewabot':
-         teksnya =`*── 「 PRICE LIST 」 ──*
-
-*Tarif Premium User adalah 10K Perbulan*
-*Keuntungan Premium Diantaranya:*
-♲ *Bebas memakai fitur premium*
-♲ *Dapat Informasi Lebih dulu akan Update, Nomor Bot Baru (Jika Terbanned), dan Lainnya*
-
-*Jika Tertarik,Kalian Bisa Bayar Melalui Metode Pembayaran di Bawah:*
-*Dana : 083872131057*
-
-*Info Lebih Lengkap Chat Owner, Ketik ${prefix}owner*
-*_note_*:
-*Pembelian Premium yang disertai SewaBot hanya akan membayar 20K (Diskon 5K)*
-*Minat? Klik Dibawah Ini*`
-              
-buttons = [{buttonId: '${prefix}owner',buttonText:{displayText: 'MINAT'},type:1}]
-
-               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
-
-               buttonsMessage = {
-               contentText: `${teksnya}`,
-               footerText: 'Created By @Rafa29__', imageMessage: imageMsg,
-               buttons: buttons,
-               headerType: 4
-}
-
-               prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
-               nino.relayWAMessage(prep)
-               break
-        case 'rules':
-         work =`-----[ Syarat & Ketentuan ]-----
-
-1. Jangan spam bot. 
-Sanksi: *WARN/SOFT BLOCK*
-
-2. Jangan telepon bot.
-Sanksi: *SOFT BLOCK*
-
-3. Jangan mengejek bot.
-Sanksi: *PERMANENT BLOCK*
-
-4. Jangan Culik bot ke gc tanpa sewa.
-Sanksi: *PERMANENT BAN BLOCK SEND BUG*
-
-Jika sudah dipahami Syarat & Ketentuan-nya, silakan Klik *COMMAND* Di Bawah Ini`
-               
-               buttons = [{buttonId: '#menuku',buttonText:{displayText: 'MENU'},type:1}]               
-
-               buttonsMessage = {
-               contentText: `${work}`,
-               footerText: 'Created By @Rafa29__', imageMessage: imageMsg,
-               buttons: buttons,
-               headerType: 1
-}
-
-               prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
-               nino.relayWAMessage(prep)
-               break
-         case 'bc':
-         case 'broadcast':
-         if (!isOwner) return  reply(mess.only.owner)
-             if (args.length < 1) return reply('teks?')
-             anu = await nino.chats.all()
-             if (isMedia && !mek.message.videoMessage || isQuotedImage) {
-             const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-             bc = await nino.downloadMediaMessage(encmedia)
-             for (let _ of anu) {
-             nino.sendMessage(_.jid, bc, image, {quoted:freply,caption: `*「 PESAN SIARAN BOT 」*\n\n${body.slice(4)}`})
-}
-             reply('Suksess broadcast')
-             } else {
-             for (let _ of anu) {
-             sendMess(_.jid, `*「 PESAN SIARAN BOT 」*\n\n${body.slice(4)}`)
-}
-             reply('Suksess broadcast')
-}
-break
-        case 'faxbotz':
-        loli = fs.readFileSync(`./lib/loli.mp3`)
-        nino.sendMessage(from, loli, MessageType.audio, {qouted: mek, mimetype: 'audio/mp4', ptt:true})
-break
         case 'menu':
         case 'help':
-        murphy = fs.readFileSync(`./lib/wmmurphy.mp3`)
-        mark = '994409002319@s.whatsapp.net'
-               menu =`Hallo Kak ${pushname} Silahkan Klik Syarat & Ketentuan Untuk Melihat Command Kayess bot`
-               
-               buttons = [{buttonId: '#rules',buttonText:{displayText: 'Syarat & Ketentuan'},type:1}]
-
-               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/murphy.jpg`), 'imageMessage')).message.imageMessage
-
-               buttonsMessage = {
-               contentText: `${menu}`,
-               footerText: 'Sewabot Pc Owner 24 Jam Online!!!', imageMessage: imageMsg,
-               buttons: buttons,
-               headerType: 4
-}
-
-               prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: freply })
-               nino.relayWAMessage(prep)
-               nino.sendMessage(from, murphy, MessageType.audio, {qouted: mek, mimetype: 'audio/mp4', ptt:true})
-               break
-        case 'menuku': 
-               consttime = moment().tz('Asia/Jakarta').format('HH:mm:ss')
-               consttanggal = moment.tz("Asia/Jakarta").format("LLLL")
-               menu =`• Hai ${pushname} 👋
-
-*Tanggal :* ${consttanggal} 
-*Jam :* ${consttime} WIB
-
-Berikut menu yang terdapat di Nakano 🤖
+               menu =`Hello, ${pushname} 
+*Here My Command List*
 
 *STICKER*
-• ${prefix}exif
-• ${prefix}sticker
-• ${prefix}toimg
-• ${prefix}tovideo
-• ${prefix}attp
-• ${prefix}stickanjing
-• ${prefix}animestick
-• ${prefix}telestick
+~> \`\`\`attp, exif, sticker, toimg, tovideo, telesticker\`\`\`
 
 *DOWNLOAD*
-• ${prefix}youtubedl
-• ${prefix}play
-• ${prefix}igdl
-• ${prefix}mediafire
-• ${prefix}tiktok
+~> \`\`\`youtubedl, play, igdl, igstory, tiktokdl, mediafire, facebook, nhdl\`\`\`
+
+*STICKER CMD*
+~> \`\`\`setcmd, delcmd, listcmd\`\`\`
 
 *SEARCH*
-• ${prefix}pinterest
+~> \`\`\`chara, image, google, ytsearch, pinterest, ytdesc\`\`\`
 
 *SESSION*
-• ${prefix}jadibot
-• ${prefix}stopjadibot
-• ${prefix}listjadibot
+~> \`\`\`jadibot, stopjadibot, listjadibot\`\`\`
 
 *IMAGE*
-• ${prefix}waifu
-• ${prefix}loli
-• ${prefix}husbu
-• ${prefix}milf
-• ${prefix}cosplay
-• ${prefix}wallml
-• ${prefix}hentai
+~> \`\`\`waifu, loli, husbu, milf, cosplay, wallml, hentai\`\`\`
 
-*TOOLS*
-• ${prefix}imgb
-• ${prefix}telegraph
+*INFO*
+~> \`\`\`owner, runtime\`\`\`
 
-*ADMIN GROUP*
-• ${prefix}welcome
-• ${prefix}group open
-• ${prefix}group close
-• ${prefix}antilink
-• ${prefix}hidetag
-• ${prefix}promote
-• ${prefix}demote
+*GROUP*
+~> \`\`\`leaveall, hidetag, welcome, culik\`\`\``
 
-*PREMIUM*
-• ${prefix}setcmd
-• ${prefix}listcmd
-• ${prefix}delcmd
+               buttons = [{buttonId:`${prefix}ping`,buttonText:{displayText:'PING'},type:1},{buttonId:`${prefix}owner`,buttonText:{displayText:'OWNER'},type:1}]
 
-© By Murphy`
-
-               buttons = [{buttonId:`${prefix}owner`,buttonText:{displayText:'Owner'},type:1},{buttonId:`${prefix}info`,buttonText:{displayText:'Info Bot'},type:1}]
-
-               buttonsMessage = { contentText: `${menu}`, footerText: 'Sewabot Pc Owner!! 24 Jam Online',  buttons: buttons, headerType: 1 }
+               buttonsMessage = { contentText: `${menu}`, footerText: 'Simple SelfBot • Made By Nino ☕',  buttons: buttons, headerType: 1 }
                prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{})
-               nino.relayWAMessage(prep) 
+               nino.relayWAMessage(prep)
                break
-//------------------< demote & promote >-------------------
-case 'demote':
-					if (!isGroup) return reply(ind.groupo())
-					if (!isGroupAdmins) return reply(ind.admin())
-					if (!isBotGroupAdmins) return reply('BOT HARUS JADI ADMIN DULU')
-					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('𝗧𝗮𝗴 𝘁𝗮𝗿𝗴𝗲𝘁 𝘆𝗮𝗻𝗴 𝗶𝗻𝗴𝗶𝗻 𝗱𝗶 𝘁𝗲𝗻𝗱𝗮𝗻𝗴!')
-					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
-					if (mentioned.length > 1) {
-						teks = ''
-						for (let _ of mentioned) {
-							teks += `Status adminmu dicopot. Makanya jan jadi beban🏃 :\n`
-							teks += `@_.split('@')[0]`
-						}
-						mentions(teks, mentioned, true)
-						nino.groupDemoteAdmin(from, mentioned)
-					} else {
-						mentions(`YA YAHYA WAHYU @${mentioned[0].split('@')[0]} Jabatan adminmu di copt, Makanya jan jadi beban🏃`, mentioned, true)
-						nino.groupDemoteAdmin(from, mentioned)
-					}
-					break
-case 'promote':
-if (!isGroup) return reply(ind.groupo())
-					if (!isGroupAdmins) return reply(ind.admin())
-					if (!isBotGroupAdmins) return reply('Gimana Mau Promote Bnag Gw Bukan Admin☺')
-					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target yg mau di promote!')
-					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
-					if (mentioned.length > 1) {
-						teks = ''
-						for (let _ of mentioned) {
-							teks += `Sekarang Admin`
-							teks += `@_.split('@')[0]`
-						}
-						mentions(teks, mentioned, true)
-						nino.groupMakeAdmin(from, mentioned)
-					} else {
-						mentions(`Sekarang Admin`, mentioned, true)
-						nino.groupMakeAdmin(from, mentioned)
-					}
-					break
 //------------------< Sticker Cmd >-------------------
        case 'addcmd': 
        case 'setcmd':
-              if (isOwner && fromMe) return reply('Kamu Bukan User Premium')
               if (isQuotedSticker) {
               if (!q) return reply(`Penggunaan : ${command} cmdnya dan tag stickernya`)
               var kodenya = mek.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage.fileSha256.toString('base64')
@@ -701,7 +415,6 @@ if (!isGroup) return reply(ind.groupo())
 }
               break
        case 'delcmd':
-              if (isOwner && fromMe) return reply('Kamu Bukan User Premium')
               if (!isQuotedSticker) return reply(`Penggunaan : ${command} tagsticker`)
               var kodenya = mek.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage.fileSha256.toString('base64')
             _scommand.splice(getCommandPosition(kodenya), 1)
@@ -709,7 +422,6 @@ if (!isGroup) return reply(ind.groupo())
               textImg("Done!")
               break
        case 'listcmd':
-              if (isOwner && fromMe) return reply('Kamu Bukan User Premium')
               let teksnyee = `\`\`\`「 LIST STICKER CMD 」\`\`\``
               let cemde = [];
               for (let i of _scommand) {
@@ -798,23 +510,15 @@ if (!isGroup) return reply(ind.groupo())
               nino.relayWAMessage(prep)
               fs.unlinkSync(`./ytmp.jpeg`)
               break
-       case 'buttons5': 
-             if (!q) return reply('Linknya?')
-             if (!q.includes('tiktok')) return reply(mess.error.Iv)
-             reply(mess.wait)
-             anu = await TiktokDownloader(`${q}`)
-            .then((data) => { sendMediaURL(from, data.result.watermark) })
-            .catch((err) => { reply(String(err)) })
-             break
-       case 'tiktok':
+       case 'tiktokdl':
               if (!q) return reply('Linknya?')
               if (!q.includes('tiktok')) return reply(mess.error.Iv)
               data = await fetchJson(`https://api.lolhuman.xyz/api/tiktok?apikey=${setting.lolkey}&url=${q}`)
               result = `⚜️ *Nickname*: ${data.result.author.nickname}\n❤️ *Like*: ${data.result.statistic.diggCount}\n💬 *Komentar*: ${data.result.statistic.commentCount}\n🔁 *Share*: ${data.result.statistic.shareCount}\n🎞️ *Views*: ${data.result.statistic.playCount}\n📑 *Desc*: ${data.result.title}`
-              buttons = [{buttonId: `${prefix}buttons5 ${q}`,buttonText:{displayText: `WM`},type:1},{buttonId:`${prefix}buttons4 ${q}`,buttonText:{displayText:'MUSIC'},type:1},{buttonId:`${prefix}buttons3 ${q}`,buttonText:{displayText:'NOWM'},type:1}]
+              buttons = [{buttonId: `${prefix}buttons3 ${q}`,buttonText:{displayText: `▶️ Video`},type:1},{buttonId:`${prefix}buttons4 ${q}`,buttonText:{displayText:'🎵 Audio'},type:1}]
               fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(data.result.thumbnail))
               imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'imageMessage', {thumbnail: Buffer.alloc(0)})).message.imageMessage
-              buttonsMessage = {footerText:'Mau Di Sajikan Apa Watermark/Nowatermark/Music PilihDi Bawah yak', imageMessage: imageMsg,
+              buttonsMessage = {footerText:'Pilih satu format di bawah ini', imageMessage: imageMsg,
               contentText:`${result}`,buttons,headerType:4}
               prep = await nino.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               nino.relayWAMessage(prep)
@@ -843,44 +547,6 @@ if (!isGroup) return reply(ind.groupo())
               res = await y2mateV(teks)
               sendFileFromUrl(res[0].link, video, {quoted: mek, mimetype: 'video/mp4', filename: res[0].output})
               break
-       // STICKER MENU
-       case 'stickanjing':
-        fetch('https://raw.githubusercontent.com/rashidsiregar28/data/main/anjing')
-             .then(res => res.text())
-             .then(body => {
-              let tod = body.split("\n");
-              let pjr = tod[Math.floor(Math.random() * tod.length)];
-              sendWebp(from, pjr)
-}
-)
-break
-       case 'telesticker':
-       case 'telestick':
-       case 'telesticker': 
-       case 'telestiker':
-              if (!q) return reply(`Example: ${prefix + command} https://t.me/addstickers/LINE_Menhera_chan_ENG`)
-              reply(mess.wait)
-              ini_url = await fetchJson(`https://api.lolhuman.xyz/api/telestick?apikey=${setting.lolkey}&url=${args[0]}`)
-              ini_sticker = ini_url.result.sticker
-              reply('Sending '+ ini_sticker.length +' stickers...')
-              for (sticker_ in ini_sticker) {
-              ini_buffer = await getBuffer(ini_sticker[sticker_])
-              nino.sendMessage(from, ini_buffer, sticker, {})
-}
-              break
-       case 'animestick':
-       case 'stickanime':
-       case 'stickeranime':
-       reply('Sabar Bang Load')
-              fetch('https://raw.githubusercontent.com/rashidsiregar28/data/main/animestick')
-             .then(res => res.text())
-             .then(body => {
-              let todd = body.split("\n");
-              let pjrr = todd[Math.floor(Math.random() * todd.length)];
-              sendWebp(from, pjrr)
-}
-)
-break
        case 'buttons3': 
              if (!q) return reply('Linknya?')
              if (!q.includes('tiktok')) return reply(mess.error.Iv)
@@ -890,9 +556,9 @@ break
              break
       case 'buttons4': 
              if (!q) return reply('Linknya?')
-             if (!q.includes('tiktok')) return reply(mess.error.Iv)             
-             get_audio = await getBuffer(`https://api.lolhuman.xyz/api/tiktokmusic?apikey=${setting.lolkey}&url=${args[0]}`)
-             nino.sendMessage(from, get_audio, audio, { mimetype: Mimetype.mp4Audio, quoted: mek })
+             if (!q.includes('tiktok')) return reply(mess.error.Iv)
+             data = await getBuffer(`https://api.lolhuman.xyz/api/tiktokmusic?apikey=${setting.lolkey}&url=${args[0]}`)
+             nino.sendMessage(from, data, audio, { quoted: mek })
              break
       case 'google':
               if (!q) return reply(mess.wrongFormat)
@@ -1067,23 +733,7 @@ a += `
                reply(`${e}`)
 }
                break
-       case 'imgb':
-       case 'img2url':
-               reply(mess.wait) 
-               var imgbb = require('imgbb-uploader')
-               var encmedia  = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-               var media = await  nino.downloadAndSaveMediaMessage(encmedia)       
-               imgbb('39d895963468b814fad0514bd28787e2', media)
-              .then(data => {
-               var caps = `*_IMAGE TO URL_*\n\n*~>  ID :* ${data.id}\n*~>  MimeType :* ${data.image.mime}\n*~>  Extension :* ${data.image.extension}\n*~>  URL :* ${data.display_url}`
-               ibb = fs.readFileSync(media)
-               nino.sendMessage(from, ibb, image, { quoted: mek, caption: caps})
-})
-              .catch(err => {
-               throw err
-})
-               break
-       case 'telegraph':
+       case 'tourl':
                if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedVideo ) && args.length == 0) {
                reply(mess.wait)
                boij = isQuotedImage || isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
@@ -1124,7 +774,7 @@ a += `
               exec(`ffmpeg -i ${mediat} -vf "scale=512:512:force_original_aspect_ratio=increase,fps=15, crop=512:512" ${ron}`, (err) => {
               fs.unlinkSync(mediat)
               if (err) return reply(`${err}`)
-              exec(`webpmux -set exif ${addMetadata('Wm Murphy')} ${ron} -o ${ron}`, async (error) => {
+              exec(`webpmux -set exif ${addMetadata('Ninochan')} ${ron} -o ${ron}`, async (error) => {
               if (error) return reply(`${error}`)
               nino.sendMessage(from, fs.readFileSync(ron), sticker, {quoted:mek})
               fs.unlinkSync(ron)
@@ -1214,16 +864,6 @@ a += `
              await sleep(3000)
              process.exit()
              break
-      case 'leave':
-       if (!isOwner) return reply(ind.ownerb()) 
-                      setTimeout( () => {
-                      nino.groupLeave (from) 
-                      }, 2000)
-                      setTimeout( () => {
-                      nino.updatePresence(from, Presence.composing) 
-                      reply('Gw Di Suruh Bye')
-                      }, 0)
-                      break
       case 'leaveall':
              if (!isOwner) return  
              let totalgroup = nino.chats.array.filter(u => u.jid.endsWith('@g.us')).map(u => u.jid)
@@ -1333,47 +973,29 @@ a += `
                nino.sendMessage(from, teks, text, {quoted: mek})
                break
        case 'welcome':
-               if (!isGroup) return reply(mess.only.group)
-               if (args.length < 1) return reply('!welcome enable/disable')
-               if ((args[0]) === 'enable') {
-               if (isWelkom) return reply('Udah aktif')
-               welkom.push(from)
-               fs.writeFileSync('./database/welcome.json', JSON.stringify(welkom))
-               reply('Sukses mengaktifkan fitur welcome di group ini ✔️')
-               } else if ((args[0]) === 'disable') {
-               welkom.splice(from, 1)
-               fs.writeFileSync('./database/welcome.json', JSON.stringify(welkom))
-               reply('Sukses menonaktifkan fitur welcome di group ini ✔️')
-               } else {
-               reply('Enable untuk mengaktifkan, disable untuk menonaktifkan')
+              if (!isGroup) return reply(mess.only.group)
+              if (args.length < 1) return reply(`${prefix}welcome enable/disable`)
+              if ((args[0]) === 'enable') {
+              if (isWelkom) return reply('Udah aktif')
+              welkom.push(from)
+              fs.writeFileSync('./database/welcome.json', JSON.stringify(welkom))
+              reply('Sukses mengaktifkan fitur welcome di group ini ✔️')
+              } else if ((args[0]) === 'disable') {
+              welkom.splice(from, 1)
+              fs.writeFileSync('./database/welcome.json', JSON.stringify(welkom))
+              reply('Sukses menonaktifkan fitur welcome di group ini ✔️')
+              } else {
+              reply('Enable untuk mengaktifkan, disable untuk menonaktifkan')
 }
-               break
-            case 'left':
-                if (!isGroup) return reply(mess.OnlyGrup)
-                if (!isGroupAdmins && !isOwner) return reply(mess.GrupAdmin)
-                if (args.length === 1) return reply(`Pilih enable atau disable\nContoh : ${prefix}left enable`)
-                if (args[1].toLowerCase() === 'enable'){
-                    if (isLeft) return reply(`Udah aktif`)
-                    left.push(from)
-					fs.writeFileSync('./database/left.json', JSON.stringify(left))
-					reply('Left aktif')
-                } else if (args[1].toLowerCase() === 'disable'){
-                    let anu = left.indexOf(from)
-                    left.splice(anu, 1)
-                    fs.writeFileSync('./database/left.json', JSON.stringify(left))
-                    reply('Left nonaktif')
-                } else {
-                    reply(`Pilih enable atau disable\nContoh : ${prefix}left enable`)
-                }
-                break
+              break
        case 'infoig':
-              teks = `Jangan Lupa Follow Ig Owner Ya : https://www.instagram.com/ffzkyaf`
+              teks = `Jangan Lupa Follow Ig Owner Ya : https://www.instagram.com/nino.chan26/`
               nino.sendMessage(from, teks, text, { quoted : mek })
               break
        case 'sourcecode': 
        case 'sc': 
        case 'src':
-              textImg(`Ga ada sc sc an`)
+              textImg(`Bot ini menggunakan sc : https://github.com/Xinz-Team/XinzBot`)
               break
        case 'jadibot':
               if (!isOwner) return

@@ -42,7 +42,6 @@ const exif = new Exif();
 const { getBuffer, getGroupAdmins, getRandom, runtime, sleep } = require('./lib/myfunc')
 const { fetchJson, getBase64, kyun, createExif } = require('./lib/fetch')
 const { color, bgcolor } = require('./lib/color')
-const { other } = require('./message/help.js')
 const { mess } = require('./message/mess')
 const { Toxic } = require('./lib/Toxic.js')
 const { cmdadd } = require('./lib/totalcmd.js')
@@ -462,7 +461,7 @@ https://wa.me/994409002319
 │ • _Rafa / Murphy_
 ╰────────┈`
                
-               buttons = [{buttonId: '#owner2',buttonText:{displayText: 'Other's Bot'},type:1}]
+               buttons = [{buttonId: '#owner',buttonText:{displayText: 'Other's Bot'},type:1}]
 
                imageMsg = ( await nino.prepareMessage(from, fs.readFileSync(`./media/jancok1.jpg`), 'imageMessage')).message.imageMessage
 
@@ -557,7 +556,7 @@ break
         case 'faxbotz':
         loli = fs.readFileSync(`./lib/loli.mp3`)
         nino.sendMessage(from, loli, MessageType.audio, {qouted: mek, mimetype: 'audio/mp4', ptt:true})
-break       
+break        
         case 'menu':
         case 'help':
         murphy = fs.readFileSync(`./lib/wmmurphy.mp3`)

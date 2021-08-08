@@ -556,7 +556,7 @@ break
         case 'faxbotz':
         loli = fs.readFileSync(`./lib/loli.mp3`)
         nino.sendMessage(from, loli, MessageType.audio, {qouted: mek, mimetype: 'audio/mp4', ptt:true})
-break        
+break
         case 'menu':
         case 'help':
         murphy = fs.readFileSync(`./lib/wmmurphy.mp3`)
